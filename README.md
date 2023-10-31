@@ -1,2 +1,2 @@
-# videoJuegoPang
-Es el famoso juego de recreativa llamado Pang
+# Pang Game
+THE FAMOUS RETRO GAME
