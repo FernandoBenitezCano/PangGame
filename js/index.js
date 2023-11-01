@@ -20,5 +20,5 @@ function startGame(){
     //2.1 If the character loses three lives, the defeat message will be displayed.
     // Otherwise, the victory message will be displayed.
     //3 If the ball hits with the bullet, she will die
-    //4 If the boot hits the ground, walls, or ceiling, it will bounce back.
+    //4 If the ball hits the ground, walls, or ceiling, it will bounce back.
 }
