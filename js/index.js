@@ -1,57 +1,46 @@
-let body = document.getElementsByTagName("body")[0];
-let gameBoardElement= document.getElementById("gameBoard");
-let startMsg= document.getElementById("startMsg");
-let player=document.createElement("div");
+let gameBoardElement = document.getElementById("gameBoard");
+let startMsg = document.getElementById("startMsg");
+let player = document.createElement("div");
+player.classList.add("player"); // Agrega la clase "player" para aplicar estilos
+
+let playerSpeed = 15; // Define la velocidad de movimiento del jugador
 
 function keyPressed(event) {
-    startMsg.classList.toggle("hide");// startMsg it's hide
-    // Delete the listener after the first key pressed
-    document.removeEventListener("keydown", keyPressed);
-
-    startGame;
+  startMsg.classList.add("hide"); // Oculta el mensaje de inicio
+  // Agrega el evento de escucha de teclas al documento global para controlar el movimiento del jugador
+  document.addEventListener("keydown", movementKey);
+  // Elimina el listener para que no se ejecute más veces
+  document.removeEventListener("keydown", keyPressed);
+  startGame();
 }
 
 document.addEventListener("keydown", keyPressed);
 
-
-//complete the function startGame
-function startGame(){
-    gameBoardElement.appendChild(player);
-    player.addEventListener("keydown", movementKey);
-    //1 the ball start to fall and the character can move
-    //2 If the ball hits with the character, the charater loses 1 life
-    //2.1 If the character loses three lives, the defeat message will be displayed.
-    // Otherwise, the victory message will be displayed.
-    //3 If the ball hits with the bullet, she will die
-    //4 If the ball hits the ground, walls, or ceiling, it will bounce back.
+// Completa la función startGame
+function startGame() {
+  gameBoardElement.appendChild(player);
+  // Otros elementos y lógica del juego
 }
 
-
-
-  // Definimos una función para mover al jugador y limitar su posición dentro del cuerpo del documento
-  function movementKey(event) {
-    // Comprobamos si la tecla presionada es "a"
-    if (event.key === "a") {
-      // Llamamos a la función movePlayer con un valor negativo de velocidad para mover el jugador a la izquierda
-      movePlayer(-playerSpeed);
-    } else if (event.key === "d") {
-      // Comprobamos si la tecla presionada es "d"
-      // Llamamos a la función movePlayer con un valor positivo de velocidad para mover el jugador a la derecha
-      movePlayer(playerSpeed);
-    }
+function movementKey(event) {
+  // Comprueba si la tecla presionada es "a" o "d"
+  if (event.key === "a") {
+    movePlayer(-playerSpeed);
+  } else if (event.key === "d") {
+    movePlayer(playerSpeed);
   }
+}
 
-  function movePlayer(deltaX) {
-    // Obtenemos el rectángulo que describe al jugador
-    let playerHitBox = player.getBoundingClientRect();
-    // Obtenemos el rectángulo que describe el cuerpo del documento
-    let gameBoardSize = gameBoardElement.getBoundingClientRect();
-    // Calculamos la nueva posición izquierda del jugador
-    let newLeft = playerHitBox.left + deltaX;
-    // Verificamos si la nueva posición no excede los límites izquierdo y derecho del cuerpo del documento
-    if ( newLeft >= gameBoardSize.left && newLeft + playerHitBox.width <= gameBoardSize.right) {
-      // Establecemos la nueva posición izquierda del jugador en píxeles
-      player.style.left = newLeft + "px";
-    }
+function movePlayer(deltaX) {
+  // Obtiene el rectángulo que describe al jugador
+  let playerHitBox = player.getBoundingClientRect();
+  // Obtiene el rectángulo que describe el tablero del juego
+  let gameBoardSize = gameBoardElement.getBoundingClientRect();
+  // Calcula la nueva posición izquierda del jugador
+  let newLeft = playerHitBox.left + deltaX;
+  // Verifica si la nueva posición no excede los límites izquierdo y derecho del tablero del juego
+  if (newLeft >= gameBoardSize.left && newLeft + playerHitBox.width <= gameBoardSize.right) {
+    // Establece la nueva posición izquierda del jugador en píxeles
+    player.style.left = newLeft + "px";
   }
-  
+}
