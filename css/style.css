@@ -50,6 +50,7 @@ body{
 .hide{
     display: none;
 }
+
 .player {
     position: absolute;
     width: 50px;
@@ -57,4 +58,10 @@ body{
     background-color: blue;
     top: 90%;
     left: 50%;
-  }
+}
+
+.bullet {
+    height: 3px;
+    width: 3px;
+    background-color: aliceblue;
+}
