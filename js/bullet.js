@@ -1,8 +1,8 @@
-import { gameObject } from ".gameObject.js";
+import { GameObject } from "./gameObject.js";
 import { setCustomProperty } from "./updateProperties.js";
 
-// Define a class called 'bullet' that extends the 'gameObject' class
-export class Bullet extends gameObject {
+// Define a class called 'bullet' that extends the 'GameObject' class
+export class Bullet extends GameObject {
     // Define properties for the bullet class
     bulletElement;
     speed = 5;
@@ -10,10 +10,11 @@ export class Bullet extends gameObject {
 
     // Constructor function that initializes the bullet object
     constructor(x, y, height, width) {
-        // Call the constructor of the gameObject class with the given parameters
+        // Call the constructor of the GameObject class with the given parameters
         super(x, y, height, width);
         // Call the function to set the bullet element
         this.setBulletElement();
+        console.log("pum");
     }
 
     // Function to create and set the bullet element
