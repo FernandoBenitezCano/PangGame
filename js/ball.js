@@ -1,9 +1,11 @@
-import { GameObject } from "./gameObject.js";
+import {
+    GameObject
+} from "./gameObject.js";
 
 export class Ball extends GameObject {
 
-    constructor(x, y, width, height) {
-        super(x, y, width, height)
+    constructor(x, y, height, width) {
+        super(x, y, height, width)
         this.setElement();
     }
 
@@ -16,6 +18,10 @@ export class Ball extends GameObject {
 
     getElement() {
         return this.ballElement;
-      }
+    }
 
+    updateBall() {
+        this.y = this.y + this.velocity;
+        setCustomProperty(this.ballElement, "bottom", this.y + "px");
+    }
 }
