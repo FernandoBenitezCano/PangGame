@@ -60,7 +60,5 @@ body{
 }
 
 .bullet {
-    height: 3px;
-    width: 3px;
     background-color: aliceblue;
 }
