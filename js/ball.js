@@ -22,6 +22,7 @@ export class Ball extends GameObject {
 
     updateBall() {
         this.y = this.y + this.velocity;
-        setCustomProperty(this.ballElement, "bottom", this.y + "px");
+        this.x = this.x + this.velocity;
+        setCustomProperty(this.ballElement, "top", this.y + "px");
     }
 }
