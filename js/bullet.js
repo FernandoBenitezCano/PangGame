@@ -25,10 +25,10 @@ export class Bullet extends GameObject {
         this.bulletElement.classList.add("bullet");
 
         // Set the custom properties for the bullet element
-        this.bulletElement.style.setCustomProperty(this.bulletElement, "left", this.x + "px");
-        this.bulletElement.style.setCustomProperty(this.bulletElement, "bottom", this.y + "px");
-        this.bulletElement.style.setCustomProperty(this.bulletElement, "height", this.height + "px");
-        this.bulletElement.style.setCustomProperty(this.bulletElement, "width", this.width + "px");
+        setCustomProperty(this.bulletElement, "left", this.x + "px");
+        setCustomProperty(this.bulletElement, "bottom", this.y + "px");
+        setCustomProperty(this.bulletElement, "height", this.height + "px");
+        setCustomProperty(this.bulletElement, "width", this.width + "px");
 
         // Set a timeout function to remove the bullet element after a specified time
         setTimeout(() => {
