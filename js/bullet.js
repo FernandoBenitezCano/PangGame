@@ -2,7 +2,7 @@ import { gameObject } from ".gameObject.js";
 import { setCustomProperty } from "./updateProperties.js";
 
 // Define a class called 'bullet' that extends the 'gameObject' class
-export class bullet extends gameObject {
+export class Bullet extends gameObject {
     // Define properties for the bullet class
     bulletElement;
     speed = 5;
