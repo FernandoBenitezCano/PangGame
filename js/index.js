@@ -1,3 +1,4 @@
+import { Bullet } from "./bullet.js";
 let gameBoardElement = document.getElementById("gameBoard");
 let startMsg = document.getElementById("startMsg");
 let player = document.createElement("div");
@@ -19,6 +20,8 @@ document.addEventListener("keydown", keyPressed);
 // Complete the function startGame
 function startGame() {
   gameBoardElement.appendChild(player);
+  let bullet= new Bullet(20,20,200,200);
+  gameBoardElement.appendChild(bullet.getElement);
 }
 
 function movementKey(event) {
