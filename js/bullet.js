@@ -1,4 +1,5 @@
 import { gameObject } from ".gameObject.js";
+import { setCustomProperty } from "./updateProperties.js";
 
 // Define a class called 'bullet' that extends the 'gameObject' class
 export class bullet extends gameObject {
@@ -25,6 +26,8 @@ export class bullet extends gameObject {
         // Set the custom properties for the bullet element
         this.bulletElement.style.setCustomProperty(this.bulletElement, "left", this.x + "px");
         this.bulletElement.style.setCustomProperty(this.bulletElement, "bottom", this.y + "px");
+        this.bulletElement.style.setCustomProperty(this.bulletElement, "height", this.height + "px");
+        this.bulletElement.style.setCustomProperty(this.bulletElement, "width", this.width + "px");
 
         // Set a timeout function to remove the bullet element after a specified time
         setTimeout(() => {
