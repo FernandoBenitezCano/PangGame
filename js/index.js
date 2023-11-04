@@ -42,13 +42,26 @@ function movementKey(event) {
   }
 }
 
+
 function movePlayer(deltaX) {
-  let playerHitBox = player.getBoundingClientRect();
+  // Obtiene el cuadro delimitador del jugador
+  let playerHitBox = player.getElement().getBoundingClientRect();
+
+  // Obtiene el cuadro delimitador del gameBoard
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
-  let newLeft = playerHitBox.left + deltaX;
+
+  // Calcula la nueva posición x
+  let newLeft = player.x + deltaX;
+
+  // Aplica límites a la izquierda y a la derecha
   if (newLeft >= gameBoardSize.left && newLeft + playerHitBox.width <= gameBoardSize.right) {
-    player.style.left = newLeft + "px";
+    player.x = newLeft;
+  } else if (newLeft < gameBoardSize.left) {
+    player.x = gameBoardSize.left;
+  } else if (newLeft + playerHitBox.width > gameBoardSize.right) {
+    player.x = gameBoardSize.right - playerHitBox.width;
   }
+
+  // Actualiza la posición del elemento del jugador en el DOM
+  player.getElement().style.left = player.x + "px";
 }
-
-

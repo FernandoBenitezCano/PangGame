@@ -20,20 +20,9 @@ export class Player extends GameObject {
   getElement() {
     return this.playerElement;
   }
-
-  updatePlayer(direction) {
-
-    switch (direction) {
-      case "right":
-        this.x += this.playerSpeed;
-        this.playerElement.style.left = this.x + "px";
-
-      case "left":
-        this.x -= this.playerSpeed; 
-        this.playerElement.style.left = this.x + "px";
-        break;
-    }
-
-
+  
+  updateElementPosition() {
+    this.playerElement.style.left = this.x + "px";
+    this.playerElement.style.top = this.y + "px";
   }
 }
