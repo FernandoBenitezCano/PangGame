@@ -19,7 +19,7 @@ document.addEventListener("keydown", keyPressed);
 
 // Complete the function startGame
 function startGame() {
-  player = new Player(20, 20, 30, 30);
+  player = new Player(20, 20, 50, 30);
   gameBoardElement.appendChild(player.getElement());
   document.addEventListener("keydown", movementKey);
   document.addEventListener("keydown", shot);
@@ -29,7 +29,14 @@ function startGame() {
 
 function shot(event) {
   if (event.code === "Space") {
-    let bullet = new Bullet(player.x, player.y, 20, 10);
+    // Obtiene el cuadro delimitador del jugador
+    let playerHitBox = player.getElement().getBoundingClientRect();
+
+    // Calcula la posición inicial de la bala centrada en el jugador, pero desde abajo
+    let bulletX = playerHitBox.left + (playerHitBox.width / 2) - (20 / 2);
+    let bulletY = playerHitBox.bottom; // Cambia playerHitBox.top a playerHitBox.bottom
+
+    let bullet = new Bullet(bulletX, bulletY, 20, 10);
     gameBoardElement.appendChild(bullet.getElement());
   }
 }
@@ -44,24 +51,10 @@ function movementKey(event) {
 
 
 function movePlayer(deltaX) {
-  // Obtiene el cuadro delimitador del jugador
   let playerHitBox = player.getElement().getBoundingClientRect();
-
-  // Obtiene el cuadro delimitador del gameBoard
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
-
-  // Calcula la nueva posición x
-  let newLeft = player.x + deltaX;
-
-  // Aplica límites a la izquierda y a la derecha
+  let newLeft = playerHitBox.left + deltaX;
   if (newLeft >= gameBoardSize.left && newLeft + playerHitBox.width <= gameBoardSize.right) {
-    player.x = newLeft;
-  } else if (newLeft < gameBoardSize.left) {
-    player.x = gameBoardSize.left;
-  } else if (newLeft + playerHitBox.width > gameBoardSize.right) {
-    player.x = gameBoardSize.right - playerHitBox.width;
+    player.getElement().style.left = newLeft + "px";
   }
-
-  // Actualiza la posición del elemento del jugador en el DOM
-  player.getElement().style.left = player.x + "px";
 }

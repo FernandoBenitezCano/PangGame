@@ -21,8 +21,4 @@ export class Player extends GameObject {
     return this.playerElement;
   }
   
-  updateElementPosition() {
-    this.playerElement.style.left = this.x + "px";
-    this.playerElement.style.top = this.y + "px";
-  }
 }

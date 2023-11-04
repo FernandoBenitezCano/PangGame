@@ -58,6 +58,7 @@ body{
 }
 
 .bullet {
+    position: absolute;
     background-color: aliceblue;
 }
 
