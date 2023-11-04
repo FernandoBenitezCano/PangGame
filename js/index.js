@@ -4,10 +4,10 @@ import { Ball } from "./ball.js";
 
 let gameBoardElement = document.getElementById("gameBoard");
 let startMsg = document.getElementById("startMsg");
-let player; // Declarar el jugador fuera de startGame
+let player; // Declare the player outside of startGame
 
 function keyPressed(event) {
-  startMsg.classList.add("hide"); // Oculta el mensaje de inicio
+  startMsg.classList.add("hide"); // Hide the start message
   console.log(event);
 
   // Delete the listener
@@ -36,21 +36,21 @@ function moveBallDown(ball) {
   let ballHitBox = ballElement.getBoundingClientRect();
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
 
-  // Verifica si la bola alcanza la parte inferior del tablero de juego
+  // Check if the ball reaches the bottom of the game board
   if (ballHitBox.bottom < gameBoardSize.bottom) {
-    let newTop = ballHitBox.top + 5; // Ajusta el valor de movimiento hacia abajo según sea necesario
+    let newTop = ballHitBox.top + 5; // Adjust the downward movement value as needed
     ballElement.style.top = newTop + "px";
   }
 }
 
 function shot(event) {
   if (event.code === "Space") {
-    // Obtiene el cuadro delimitador del jugador
+    // Get the player's bounding box
     let playerHitBox = player.getElement().getBoundingClientRect();
 
-    // Calcula la posición inicial de la bala centrada en el jugador, desde arriba
+    // Calculate the initial position of the bullet centered on the player, from the top
     let bulletX = playerHitBox.left + (playerHitBox.width / 2) - (20 / 2);
-    let bulletY = player.height; // Utiliza playerHitBox.top
+    let bulletY = player.height; // Use playerHitBox.top
 
     let bullet = new Bullet(bulletX, bulletY, 20, 10);
     gameBoardElement.appendChild(bullet.getElement());
