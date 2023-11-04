@@ -25,6 +25,22 @@ function startGame() {
   document.addEventListener("keydown", shot);
   let ball = new Ball(20, 20, 200, 200);
   gameBoardElement.appendChild(ball.getElement());
+
+  setInterval(() => {
+    moveBallDown(ball);
+  }, ball.speed);
+}
+
+function moveBallDown(ball) {
+  let ballElement = ball.getElement();
+  let ballHitBox = ballElement.getBoundingClientRect();
+  let gameBoardSize = gameBoardElement.getBoundingClientRect();
+
+  // Verifica si la bola alcanza la parte inferior del tablero de juego
+  if (ballHitBox.bottom < gameBoardSize.bottom) {
+    let newTop = ballHitBox.top + 5; // Ajusta el valor de movimiento hacia abajo según sea necesario
+    ballElement.style.top = newTop + "px";
+  }
 }
 
 function shot(event) {

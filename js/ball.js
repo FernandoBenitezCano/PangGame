@@ -3,6 +3,7 @@ import { setCustomProperty } from "./updateProperties.js";
 
 export class Ball extends GameObject {
 
+    speed = 40;
     constructor(x, y, height, width) {
         super(x, y, height, width)
         this.setElement();
