@@ -6,7 +6,7 @@ export class Bullet extends GameObject {
     // Define properties for the bullet class
     bulletElement;
     speed = 5;
-    timeLife = 1500;
+    timeLife = 4800;
 
     // Constructor function that initializes the bullet object
     constructor(x, y, height, width) {
@@ -43,7 +43,7 @@ export class Bullet extends GameObject {
 
     // This method updates the bullet's position by adjusting its vertical position.
     updateBullet() {
-        this.y = this.y + this.velocity;
+        this.y = this.y + this.speed;
         setCustomProperty(this.bulletElement, "bottom", this.y + "px");
     }
 }

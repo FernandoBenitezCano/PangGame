@@ -5,6 +5,7 @@ import { Ball } from "./ball.js";
 let gameBoardElement = document.getElementById("gameBoard");
 let startMsg = document.getElementById("startMsg");
 let player; // Declare the player outside of startGame
+let lastShotTime = 0;
 
 function keyPressed(event) {
   startMsg.classList.add("hide"); // Hide the start message
@@ -45,6 +46,12 @@ function moveBallDown(ball) {
 
 function shot(event) {
   if (event.code === "Space") {
+    let currentTime = new Date().getTime();
+
+    if (currentTime - lastShotTime >= 500) {
+
+      lastShotTime = currentTime;
+
     // Get the player's bounding box
     let playerHitBox = player.getElement().getBoundingClientRect();
 
@@ -54,6 +61,19 @@ function shot(event) {
 
     let bullet = new Bullet(bulletX, bulletY, 20, 10);
     gameBoardElement.appendChild(bullet.getElement());
+
+    // Move the bullet upwards continuously
+    let bulletMoveInterval = setInterval(() => {
+      bullet.updateBullet();
+
+      // Check if the bullet is out of the game board's top boundary, then remove it and clear the interval
+      if (bullet.y < 0) {
+        gameBoardElement.removeChild(bullet.getElement());
+        clearInterval(bulletMoveInterval);
+      }
+    }, 50); // Adjust the interval duration as needed
+    }
+
   }
 }
 
