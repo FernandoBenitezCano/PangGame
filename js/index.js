@@ -8,10 +8,7 @@ let player;
 let ball;
 let lastShotTime = 0;
 
-let victories = 0; /// Variables para el contador
-let defeats = 0;
-
-let bullets = []; // use an array to store bullets
+let bullets = []; // Usar un array para almacenar múltiples balas
 
 function keyPressed(event) {
   startMsg.classList.add("hide");
@@ -36,11 +33,11 @@ function startGame() {
 
 function gameLoop() {
   moveBallDown(ball);
-  moveBullets(); // Call the function to move the bullets
+  moveBullets(); // Llamar a la función para mover las balas
 
   requestAnimationFrame(gameLoop);
 }
-/*
+
 function moveBallDown(ball) {
   let ballElement = ball.getElement();
   let ballHitBox = ballElement.getBoundingClientRect();
@@ -51,28 +48,6 @@ function moveBallDown(ball) {
     ballElement.style.top = newTop + "px";
   }
 }
-*/
-/*
-Tengo el codigo anterior por si no os gusta solo teneis que cambiarlo
-descomentar y borrar el que funciona
-*/
-function moveBallDown(ball) {
-  let ballElement = ball.getElement();
-  let ballHitBox = ballElement.getBoundingClientRect();
-  let gameBoardSize = gameBoardElement.getBoundingClientRect();
-
-  if (ballHitBox.bottom < gameBoardSize.bottom) {
-    let newTop = ballHitBox.top + 5;
-    ballElement.style.top = newTop + "px";
-  } else {
-    // Incrementa el contador de derrotas y muestra el mensaje "Derrota"
-    defeats++;
-    console.log("Derrota");
-    updateScoreBoard(); // Actualiza el marcador
-  }
-
-}
-
 
 function shot(event) {
   if (event.code === "Space") {
@@ -93,7 +68,7 @@ function shot(event) {
       // Start the continuous bullet movement interval
       let bulletMoveInterval = setInterval(() => {
         newBullet.updateBullet();
-        checkCollisions(newBullet); // Change for colision
+        checkCollisions(newBullet); // Pasar la bala a la función de colisión
 
         if (newBullet.y < 0) {
           gameBoardElement.removeChild(newBullet.getElement());
@@ -128,7 +103,7 @@ function moveBullets() {
     bullets[i].updateBullet();
   }
 }
-/*
+
 function checkCollisions(bullet) {
   let bulletHitBox = bullet.getElement().getBoundingClientRect();
   let ballHitBox = ball.getElement().getBoundingClientRect();
@@ -142,35 +117,4 @@ function checkCollisions(bullet) {
     gameBoardElement.removeChild(ball.getElement());
     gameBoardElement.removeChild(bullet.getElement());
   }
-}
-*/
-
-/*
-Borrar, si no os parece bien,  el de abajo 
-*/
-function checkCollisions(bullet) {
-  let bulletHitBox = bullet.getElement().getBoundingClientRect();
-  let ballHitBox = ball.getElement().getBoundingClientRect();
-
-  if (
-    bulletHitBox.right >= ballHitBox.left &&
-    bulletHitBox.left <= ballHitBox.right &&
-    bulletHitBox.bottom >= ballHitBox.top &&
-    bulletHitBox.top <= ballHitBox.bottom
-  ) {
-    gameBoardElement.removeChild(ball.getElement());
-    gameBoardElement.removeChild(bullet.getElement());
-
-    // Incrementa el contador de victorias y muestra el mensaje "Victoria"
-    victories++;
-    console.log("Victoria");
-    updateScoreBoard(); // Actualiza el marcador
-  }
-
-}
-
-function updateScoreBoard() {
-  // Actualiza el contenido de los elementos HTML del marcador
-  document.getElementById("victories").textContent = victories;
-  document.getElementById("defeats").textContent = defeats;
 }
