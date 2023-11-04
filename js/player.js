@@ -1,7 +1,6 @@
-// Importa la clase GameObject desde gameObject.js
+
 import { GameObject } from "./gameObject.js";
 import { setCustomProperty } from "./updateProperties.js";
-// Define la clase player que extiende GameObject
 
 export class Player extends GameObject {
   constructor(x, y, width, height) {

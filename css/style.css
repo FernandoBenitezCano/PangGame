@@ -64,5 +64,6 @@ body{
 .ball {
     border-radius: 50%;
     background-color: red;
+    top: 12%;
     position: absolute;
 }

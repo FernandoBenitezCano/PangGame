@@ -11,8 +11,8 @@ export class Ball extends GameObject {
     setElement() {
         this.ballElement = document.createElement("div");
         this.ballElement.classList.add("ball");
-        setCustomProperty(this.ballElement, "left", this.x + "px");
-        setCustomProperty(this.ballElement, "top", this.y + "px");
+        setCustomProperty(this.ballElement, "height", this.height + "px");
+        setCustomProperty(this.ballElement, "width", this.width + "px");
     }
 
     getElement() {
