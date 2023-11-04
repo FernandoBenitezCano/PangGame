@@ -6,7 +6,7 @@ export class Bullet extends GameObject {
     // Define properties for the bullet class
     bulletElement;
     speed = 5;
-    timeLife = 4800;
+    timeLife = 1630;
 
     // Constructor function that initializes the bullet object
     constructor(x, y, height, width) {
