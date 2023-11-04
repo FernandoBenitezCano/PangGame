@@ -59,6 +59,7 @@ body{
 
 .bullet {
     position: absolute;
+    margin-bottom: 6%;
     background-color: aliceblue;
 }
 

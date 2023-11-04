@@ -32,9 +32,9 @@ function shot(event) {
     // Obtiene el cuadro delimitador del jugador
     let playerHitBox = player.getElement().getBoundingClientRect();
 
-    // Calcula la posición inicial de la bala centrada en el jugador, pero desde abajo
+    // Calcula la posición inicial de la bala centrada en el jugador, desde arriba
     let bulletX = playerHitBox.left + (playerHitBox.width / 2) - (20 / 2);
-    let bulletY = playerHitBox.bottom; // Cambia playerHitBox.top a playerHitBox.bottom
+    let bulletY = player.height; // Utiliza playerHitBox.top
 
     let bullet = new Bullet(bulletX, bulletY, 20, 10);
     gameBoardElement.appendChild(bullet.getElement());
