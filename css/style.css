@@ -69,32 +69,5 @@ body{
     top: 12%;
     position: absolute;
 }
-#scoreBoard {
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border-radius: 5px;
-    padding: 5px;
-    position: absolute;
-    top: 8px;
-    left: 20px;
-  }
-  
-  #scoreBoard p {
-    margin-bottom: 10px;
-  }
-  
-  #scoreBoard span {
-    font-weight: bold;
-    font-size: 18px;
-    margin-left: 5px;
-  }
 
-  .game-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    position: relative;
-  }
 
