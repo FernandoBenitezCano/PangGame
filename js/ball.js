@@ -2,8 +2,8 @@ import { GameObject } from "./gameObject.js";
 import { setCustomProperty } from "./updateProperties.js";
 
 export class Ball extends GameObject {
-  speedX = 10;
-  speedY = 10;
+  speedX = 3;
+  speedY = 3;
   imagenes = [
     './img/enemyBlue.png',
     './img/enemyRed.png',

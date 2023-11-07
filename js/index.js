@@ -17,7 +17,7 @@ let bullets = [];
 let lastCollisionTimes = new Map();
 let playerLifes=3;
 let currentScore=0;
-let enemies=3;
+let enemies=5;
 const SCORE_BALL=1000;
 
 // Event handler for the key press to start the game
@@ -117,22 +117,55 @@ function moveBall(ball) {
   let ballElement = ball.getElement();
   let ballHitBox = ballElement.getBoundingClientRect();
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
+  const minHeight = 900; // Altura mínima
+  const bounceDamping = 1; // Factor de amortiguación de los rebotes (ajustado para reducir la velocidad)
+  const gravityAcceleration = 0.05; // Ajusta el valor para reducir la aceleración de la gravedad
+  const speedMultiplier = 1; // Ajuste de velocidad (ajustado para reducir la velocidad)
 
   let newTop = ballHitBox.top + ball.speedY;
   let newLeft = ballHitBox.left + ball.speedX;
 
-  if (newTop >= gameBoardSize.top && newTop + ballHitBox.height <= gameBoardSize.bottom) {
-    ballElement.style.top = newTop + "px";
+  // Simular la aceleración de la gravedad
+  ball.speedY += gravityAcceleration; // Ajusta el valor para reducir la aceleración
+
+  // Ajustar la velocidad de la bola
+  ball.speedX *= speedMultiplier;
+  ball.speedY *= speedMultiplier;
+
+  // Comprobar los límites superiores e inferiores
+  if (newTop + ballHitBox.height >= gameBoardSize.bottom) {
+    // Rebotar manteniendo una altura mínima
+    ball.speedY = -ball.speedY * bounceDamping; // Invertir la dirección en el eje Y con amortiguación
+
+    // Asegurarse de que la bola no baje por debajo de la nueva altura mínima
+    ballElement.style.top = (gameBoardSize.bottom - ballHitBox.height) + "px";
+  } else if (newTop < gameBoardSize.top) {
+    // Rebotar en la parte superior manteniendo la altura mínima
+    ball.speedY = -ball.speedY * bounceDamping; // Invertir la dirección en el eje Y con amortiguación
+    ballElement.style.top = gameBoardSize.top + "px";
   } else {
-    ball.speedY = -ball.speedY;
+    // Mover la bola en la dirección actual
+    ballElement.style.top = newTop + "px";
   }
 
-  if (newLeft >= gameBoardSize.left && newLeft + ballHitBox.width <= gameBoardSize.right) {
-    ballElement.style.left = newLeft + "px";
+  // Comprobar los límites laterales
+  if (newLeft + ballHitBox.width >= gameBoardSize.right) {
+    // Rebotar en el borde derecho
+    ball.speedX = -ball.speedX * bounceDamping; // Invertir la dirección en el eje X con amortiguación
+    ballElement.style.left = (gameBoardSize.right - ballHitBox.width) + "px";
+  } else if (newLeft <= gameBoardSize.left) {
+    // Rebotar en el borde izquierdo
+    ball.speedX = -ball.speedX * bounceDamping; // Invertir la dirección en el eje X con amortiguación
+    ballElement.style.left = gameBoardSize.left + "px";
   } else {
-    ball.speedX = -ball.speedX;
+    // Mover la bola en la dirección actual
+    ballElement.style.left = newLeft + "px";
   }
 }
+
+
+
+
 
 // Handle player shooting
 function shoot(event) {
