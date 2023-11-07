@@ -17,7 +17,7 @@ let bullets = [];
 let lastCollisionTimes = new Map();
 let playerLifes = 3;
 let currentScore = 0;
-let enemies = 4;
+let enemies = 9;
 const SCORE_BALL = 1000;
 
 // Event handler for the key press to start the game
@@ -124,53 +124,56 @@ function moveBall(ball) {
   let ballHitBox = ballElement.getBoundingClientRect();
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
 
-  const minHeight = 450; // Minimum height
-  const bounceDamping = 1; // Bounce damping factor (adjusted to reduce speed)
-  const gravityAcceleration = 0.05; // Adjust the value to reduce gravity acceleration
-  const speedMultiplier = 1; // Speed adjustment (adjusted to reduce speed)
+  const minHeight = 450; // Altura mínima
+  const bounceDamping = 1.3; // Factor de amortiguación del rebote (ajustado para reducir la velocidad)
+  const gravityAcceleration = 0.05; // Ajusta el valor para reducir la aceleración debida a la gravedad
+  const maxSpeedX = 5; // Velocidad máxima en dirección horizontal
+  const maxSpeedY = 10; // Velocidad máxima en dirección vertical
 
   let newTop = ballHitBox.top + ball.speedY;
   let newLeft = ballHitBox.left + ball.speedX;
 
-  // Simulate gravity acceleration
+  // Limitar la velocidad máxima
+  ball.speedX = Math.min(maxSpeedX, Math.max(-maxSpeedX, ball.speedX));
+  ball.speedY = Math.min(maxSpeedY, Math.max(-maxSpeedY, ball.speedY));
+
+  // Simular la aceleración debida a la gravedad
   ball.speedY += gravityAcceleration;
 
-  // Adjust the ball's speed
-  ball.speedX *= speedMultiplier;
-  ball.speedY *= speedMultiplier;
-
-  // Check upper and lower bounds
+  // Comprobar los límites superior e inferior
   if (newTop + ballHitBox.height >= gameBoardSize.bottom) {
-    // Calculate the vertical speed required to reach the minimum height
+    // Calcular la velocidad vertical requerida para alcanzar la altura mínima
     const requiredSpeedY = -Math.sqrt(2 * gravityAcceleration * (minHeight - ballHitBox.height));
-    // Bounce while maintaining the minimum height
+    // Rebotar manteniendo la altura mínima
     ball.speedY = requiredSpeedY * bounceDamping;
 
-    // Ensure the ball doesn't fall below the new minimum height
+    // Asegurarse de que la bola no caiga por debajo de la nueva altura mínima
     ballElement.style.top = (gameBoardSize.bottom - ballHitBox.height) + "px";
   } else if (newTop < gameBoardSize.top) {
-    // Bounce at the top while maintaining the minimum height
+    // Rebotar en la parte superior manteniendo la altura mínima
     ball.speedY = -ball.speedY * bounceDamping;
     ballElement.style.top = gameBoardSize.top + "px";
   } else {
-    // Move the ball in the current direction
+    // Mover la bola en la dirección actual
     ballElement.style.top = newTop + "px";
   }
 
-  // Check lateral boundaries
+  // Comprobar los límites laterales
   if (newLeft + ballHitBox.width >= gameBoardSize.right) {
-    // Bounce at the right edge
+    // Rebotar en el borde derecho
     ball.speedX = -ball.speedX * bounceDamping;
     ballElement.style.left = (gameBoardSize.right - ballHitBox.width) + "px";
   } else if (newLeft <= gameBoardSize.left) {
-    // Bounce at the left edge
+    // Rebotar en el borde izquierdo
     ball.speedX = -ball.speedX * bounceDamping;
     ballElement.style.left = gameBoardSize.left + "px";
   } else {
-    // Move the ball in the current direction
+    // Mover la bola en la dirección actual
     ballElement.style.left = newLeft + "px";
   }
 }
+
+
 
 // Handle player shooting
 function shoot(event) {
