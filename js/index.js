@@ -18,7 +18,6 @@ function keyPressed(event) {
 }
 
 document.addEventListener("keydown", keyPressed);
-
 // Function to start the game
 function startGame() {
   player = new Player(20, 20, 50, 30);
@@ -139,6 +138,7 @@ function moveBullets() {
 // Check collisions between bullets and balls
 function checkCollisions(bullet) {
   let bulletHitBox = bullet.getElement().getBoundingClientRect();
+  let gameBoardHitBox = gameBoardElement.getBoundingClientRect();
   balls.forEach(ball => {
     let ballHitBox = ball.getElement().getBoundingClientRect();
 
@@ -152,8 +152,11 @@ function checkCollisions(bullet) {
       gameBoardElement.removeChild(bullet.getElement());
     }
   });
-}
 
+  if (bulletHitBox.top <= gameBoardHitBox.top) {
+    gameBoardElement.removeChild(bullet.getElement());
+  }
+}
 
 // Check collisions between player and balls
 function checkPlayerBallCollisions() {
