@@ -5,8 +5,8 @@ import { setCustomProperty } from "./updateProperties.js";
 export class Bullet extends GameObject {
     // Define properties for the bullet class
     bulletElement;
-    speed = 5;
-    timeLife = 1630;
+    speed = 3.5;
+    timeLife = 5000;
 
     // Constructor function that initializes the bullet object
     constructor(x, y, height, width) {
@@ -29,7 +29,7 @@ export class Bullet extends GameObject {
         setCustomProperty(this.bulletElement, "bottom", this.y + "px");
         setCustomProperty(this.bulletElement, "height", this.height + "px");
         setCustomProperty(this.bulletElement, "width", this.width + "px");
-
+        this.bulletElement.style.backgroundImage = `url("../img/bullet.png")`;
         // Set a timeout function to remove the bullet element after a specified time
         setTimeout(() => {
             this.bulletElement.remove();

@@ -5,7 +5,7 @@
     padding: 0;
 }
 
-body{
+body {
     height: 100vh;
     width: 100vw;
     background-image: url(../img/fondo.jpg);
@@ -14,20 +14,29 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    font-family: "Press Start 2P";
+}
+.container {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1%;
 }
 
 .gameBoard{
     display: flex;
-    border: 4px solid red;
+    border: 10px solid red;
     height: 80%;
     width: 80%;
-    font-family: "Press Start 2P";
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    gap: 10%;
 }
 
 .gameBoard h1{
+    margin-top: 10%;
     animation: moveUp 1.5s linear infinite;
 }
 
@@ -48,26 +57,38 @@ body{
 }
 
 .hide{
-    display: none;
+    opacity: 0;
 }
 
 .player {
     position: absolute;
     background-color: blue;
-    top: 84.6%;
+    top: 86.4%;
 }
 
 .bullet {
     position: absolute;
-    margin-bottom: 6%;
-    background-color: aliceblue;
+    margin-bottom: 4%;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .ball {
-    border-radius: 50%;
-    background-color: red;
+    background-repeat: no-repeat;
+    background-size: cover;
     top: 12%;
     position: absolute;
 }
+.manual{
+    font-weight: bold;
+}
+.manual i{
+    font-size: 25px;
+}
+.restart{
+    font-size: 20px;
+    font-weight: bold;
+}
+
 
 
