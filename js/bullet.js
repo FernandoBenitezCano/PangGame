@@ -29,7 +29,7 @@ export class Bullet extends GameObject {
         setCustomProperty(this.bulletElement, "bottom", this.y + "px");
         setCustomProperty(this.bulletElement, "height", this.height + "px");
         setCustomProperty(this.bulletElement, "width", this.width + "px");
-        this.bulletElement.style.backgroundImage = `url("../img/bullet.png")`;
+        this.bulletElement.style.backgroundImage = `url("./img/bullet.png")`;
         // Set a timeout function to remove the bullet element after a specified time
         setTimeout(() => {
             this.bulletElement.remove();

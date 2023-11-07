@@ -5,10 +5,10 @@ export class Ball extends GameObject {
   speedX = 10;
   speedY = 10;
   imagenes = [
-    '../img/enemyBlue.png',
-    '../img/enemyRed.png',
-    '../img/enemyPurple.png',
-    '../img/enemyGreen.png',
+    './img/enemyBlue.png',
+    './img/enemyRed.png',
+    './img/enemyPurple.png',
+    './img/enemyGreen.png',
   ];
 
   constructor(x, y, height, width, gameBoardElement) {
