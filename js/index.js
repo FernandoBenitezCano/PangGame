@@ -38,7 +38,9 @@ function startGame() {
   document.addEventListener("keydown", movementKey);
   document.addEventListener("keydown", shoot);
   createEnemies(); 
-
+  let backgroundMusic = document.getElementById("backgroundMusic");
+  backgroundMusic.volume = 0.5;
+  backgroundMusic.play();
 
   gameLoop();
 }
