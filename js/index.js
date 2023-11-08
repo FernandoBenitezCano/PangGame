@@ -134,55 +134,55 @@ function moveBall(ball) {
   let ballHitBox = ballElement.getBoundingClientRect();
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
 
-  const minHeight = 600; // Altura mínima
-  const bounceDamping = 0.9; // Factor de amortiguación del rebote (ajustado para reducir la velocidad)
-  const gravityAcceleration = 0.02; // Ajusta el valor para reducir la aceleración debida a la gravedad
-  const maxSpeedX = 3; // Velocidad máxima en dirección horizontal
-  const maxSpeedY = 7; // Velocidad máxima en dirección vertical
+  const minHeight = 600; // Minimum height
+  const bounceDamping = 0.9; // Rebound damping factor (adjusted to reduce speed)
+  const gravityAcceleration = 0.02; // Adjust the value to reduce the acceleration due to gravity
+  const maxSpeedX = 3; // Maximum speed in horizontal direction
+  const maxSpeedY = 7; // Maximum speed in vertical direction
 
   let newTop = ballHitBox.top + ball.speedY;
   let newLeft = ballHitBox.left + ball.speedX;
 
-  // Limitar la velocidad máxima
+  // Limit maximum speed
   ball.speedX = Math.min(maxSpeedX, Math.max(-maxSpeedX, ball.speedX));
   ball.speedY = Math.min(maxSpeedY, Math.max(-maxSpeedY, ball.speedY));
 
-  // Simular la aceleración debida a la gravedad
+  // Simulate acceleration due to gravity
   ball.speedY += gravityAcceleration;
 
-  // Comprobar los límites superior e inferior
+  // Check upper and lower limits
   if (newTop + ballHitBox.height >= gameBoardSize.bottom) {
-    // Calcular la velocidad vertical requerida para alcanzar la altura mínima
+    // Calculate the vertical velocity required to reach the minimum height
     const requiredSpeedY = -Math.sqrt(2 * gravityAcceleration * (minHeight - ballHitBox.height));
-    // Rebotar manteniendo la altura mínima
+    // Bounce maintaining the minimum height
     ball.speedY = requiredSpeedY * bounceDamping;
 
-    // Asegurarse de que la bola no caiga por debajo de la nueva altura mínima
+    // Make sure the ball does not fall below the new minimum height
     ballElement.style.top = (gameBoardSize.bottom - ballHitBox.height) + "px";
     
   } else if (newTop < gameBoardSize.top) {
-    // Rebotar en la parte superior manteniendo la altura mínima
+    // Bounce off the top while maintaining the minimum height
     ball.speedY = -ball.speedY * bounceDamping;
     ballElement.style.top = gameBoardSize.top + "px";
     
   } else {
-    // Mover la bola en la dirección actual
+    // Move the ball in actual direction
     ballElement.style.top = newTop + "px";
   }
 
-  // Comprobar los límites laterales
+  // Check lateral limits
   if (newLeft + ballHitBox.width >= gameBoardSize.right) {
-    // Rebotar en el borde derecho
+    // Bounce off the right edge
     ball.speedX = -ball.speedX * bounceDamping;
     ballElement.style.left = (gameBoardSize.right - ballHitBox.width) + "px";
     
   } else if (newLeft <= gameBoardSize.left) {
-    // Rebotar en el borde izquierdo
+    // Bounce off the left edge
     ball.speedX = -ball.speedX * bounceDamping;
     ballElement.style.left = gameBoardSize.left + "px";
    
   } else {
-    // Mover la bola en la dirección actual
+    // Move the ball in actual direction
     ballElement.style.left = newLeft + "px";
   }
 }
@@ -193,7 +193,7 @@ function shoot(event) {
   if (event.code === "Space" || event.key === "ArrowUp" || event.key === "w" || event.key === "W") {
     let currentTime = new Date().getTime();
     player.getElement().style.backgroundImage = 'url("./img/disparo.png")';
-     // Cambia el alto y ancho a tus valores deseados
+     // Changes height and width to its desired values
 
     if (currentTime - lastShotTime >= 1000) {
       lastShotTime = currentTime;
@@ -267,17 +267,17 @@ function checkCollisions(bullet) {
       bulletHitBox.bottom >= ballHitBox.top &&
       bulletHitBox.top <= ballHitBox.bottom
     ) {
-      // Colisión con una bola
+      // Collision with a ball
       collidedEnemies.push(ball);
     }
   });
 
-  // Comprueba si la bala ha colisionado con el techo
+  // Checks if the bullet has collisioned with the roof
   if (bulletHitBox.top <= gameBoardHitBox.top) {
-    // Elimina la bala del tablero
+    // Deletes the bullet from the game board
     gameBoardElement.removeChild(bullet.getElement());
     bullets.splice(bullets.indexOf(bullet), 1);
-    return; // Sale de la función para evitar más comprobaciones
+    return; // Gets out of thhe function to evade more checkings
   }
 
   for (let enemy of collidedEnemies) {
