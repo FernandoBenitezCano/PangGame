@@ -50,8 +50,8 @@ function createEnemies() {
     // Create multiple balls with random properties
     let randomX = Math.random() * (gameBoardElement.offsetWidth - 50);
     let randomY = Math.random() * (gameBoardElement.offsetHeight - 50);
-    let minSize=50;
-    let maxSize=100;
+    let minSize=30;
+    let maxSize=70;
     let randomSize = getRandomNumber(minSize, maxSize);
 
     // Generate a random direction (right or left)
@@ -136,9 +136,9 @@ function moveBall(ball) {
 
   const minHeight = 450; // Altura mínima
   const bounceDamping = 1.4; // Factor de amortiguación del rebote (ajustado para reducir la velocidad)
-  const gravityAcceleration = 0.05; // Ajusta el valor para reducir la aceleración debida a la gravedad
+  const gravityAcceleration = 0.02; // Ajusta el valor para reducir la aceleración debida a la gravedad
   const maxSpeedX = 5; // Velocidad máxima en dirección horizontal
-  const maxSpeedY = 10; // Velocidad máxima en dirección vertical
+  const maxSpeedY = 8.5; // Velocidad máxima en dirección vertical
 
   let newTop = ballHitBox.top + ball.speedY;
   let newLeft = ballHitBox.left + ball.speedX;
