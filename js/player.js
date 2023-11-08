@@ -9,8 +9,8 @@ export class Player extends GameObject {
     this.setElement();
   }
 
+  // Set the player element
   setElement() {
-
     this.playerElement = document.createElement("div");
     this.playerElement.classList.toggle("player");
     this.playerElement.style.width = this.width + "px";
@@ -18,6 +18,7 @@ export class Player extends GameObject {
     this.playerElement.style.backgroundImage = `url("./img/derecha.png")`;
   }
 
+  // Get the player element
   getElement() {
     return this.playerElement;
   }

@@ -1,8 +1,6 @@
 export function getCustomProperty(element, property) {
-    // Using getComputedStyle to obtain the CSSStyleDeclaration object 
-    //containing all computed styles applied to the element.
-    // Then, using the getPropertyValue method to retrieve the value of the specific property indicated 
-    //by the 'property' parameter.
+    /* Using getComputedStyle to obtain the CSSStyleDeclaration object containing all computed styles applied to the element.
+    Then, using the getPropertyValue method to retrieve the value of the specific property indicated by the 'property' parameter.*/
     return parseFloat(getComputedStyle(element).getPropertyValue(property)) || 0;
 }
 
