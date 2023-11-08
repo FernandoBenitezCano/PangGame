@@ -2,6 +2,6 @@
 #THE FAMOUS RETRO GAME
 ##Authors:
 ## Alejandro Reina Custodio
-## Fernando Bentez-cano Vargas
+## Fernando Benítez-cano Vargas
 ## Patricia Lima Bolumar
 
