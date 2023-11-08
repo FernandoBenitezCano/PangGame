@@ -17,9 +17,9 @@ let balls = [];
 let lastShotTime = 0;
 let bullets = [];
 let lastCollisionTimes = new Map();
-let playerLifes = 5;
+let playerLifes = 1000;
 let currentScore = 0;
-let enemies = 10;
+let enemies = 3;
 const SCORE_BALL = 1000;
 
 // Event handler for the key press to start the game
@@ -134,11 +134,11 @@ function moveBall(ball) {
   let ballHitBox = ballElement.getBoundingClientRect();
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
 
-  const minHeight = 450; // Altura mínima
-  const bounceDamping = 1.4; // Factor de amortiguación del rebote (ajustado para reducir la velocidad)
+  const minHeight = 600; // Altura mínima
+  const bounceDamping = 0.9; // Factor de amortiguación del rebote (ajustado para reducir la velocidad)
   const gravityAcceleration = 0.02; // Ajusta el valor para reducir la aceleración debida a la gravedad
-  const maxSpeedX = 5; // Velocidad máxima en dirección horizontal
-  const maxSpeedY = 8.5; // Velocidad máxima en dirección vertical
+  const maxSpeedX = 7; // Velocidad máxima en dirección horizontal
+  const maxSpeedY = 7; // Velocidad máxima en dirección vertical
 
   let newTop = ballHitBox.top + ball.speedY;
   let newLeft = ballHitBox.left + ball.speedX;
