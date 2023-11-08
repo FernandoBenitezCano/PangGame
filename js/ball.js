@@ -4,6 +4,7 @@ import { setCustomProperty } from "./updateProperties.js";
 export class Ball extends GameObject {
   speedX = 3;
   speedY = 3;
+  isDivisible = true;
   imagenes = [
     './img/enemyBlue.png',
     './img/enemyRed.png',

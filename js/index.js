@@ -282,9 +282,14 @@ function checkCollisions(bullet) {
 
   for (let enemy of collidedEnemies) {
     gameBoardElement.removeChild(enemy.getElement());
-    enemies--;
     currentScore += SCORE_BALL;
     playSound("./audio/enemyDown.mp3");
+
+    // Crea dos nuevas bolas más pequeñas a la mitad del tamaño original
+    createSmallBalls(enemy);
+
+    // Actualiza el valor de enemies para contar las bolas más pequeñas
+    enemies += 2;
   }
 
   // Remove the bullet after all collisions have been checked
@@ -293,9 +298,40 @@ function checkCollisions(bullet) {
     bullets.splice(bullets.indexOf(bullet), 1);
   }
 
-  // Update the score
+  // Update the score and enemies count
   scoreMsg.innerText = 'Score: ' + currentScore;
 }
+
+
+function createSmallBalls(parentBall) {
+  const parentSize = parentBall.width / 2;
+  const parentX = parentBall.x;
+  const parentY = parentBall.y;
+  const parentSpeedX = parentBall.speedX;
+  const parentSpeedY = parentBall.speedY;
+
+  if (parentBall.isDivisible) {
+    // Primera bola más pequeña
+    const smallBall1 = new Ball(parentX, parentY, parentSize, parentSize, gameBoardElement);
+    smallBall1.speedX = parentSpeedX * -1;
+    smallBall1.speedY = parentSpeedY;
+    smallBall1.isDivisible = false; // Establece isDivisible en false
+
+    gameBoardElement.appendChild(smallBall1.getElement());
+    balls.push(smallBall1);
+
+    // Segunda bola más pequeña
+    const smallBall2 = new Ball(parentX, parentY, parentSize, parentSize, gameBoardElement);
+    smallBall2.speedX = parentSpeedX;
+    smallBall2.speedY = parentSpeedY * -1;
+    smallBall2.isDivisible = false; // Establece isDivisible en false
+
+    gameBoardElement.appendChild(smallBall2.getElement());
+    balls.push(smallBall2);
+  }
+}
+
+
 
 // Check collisions between player and balls
 function checkPlayerBallCollisions() {
