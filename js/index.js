@@ -1,9 +1,7 @@
-// Importing necessary classes for the game
 import { Player } from "./player.js";
 import { Bullet } from "./bullet.js";
 import { Ball } from "./ball.js";
 
-// Declaration of global variables
 let gameBoardElement = document.getElementById("gameBoard");
 let startMsg = document.getElementById("startMsg");
 let container = document.getElementById("container");
@@ -47,7 +45,6 @@ function startGame() {
   gameLoop();
 }
 
-// Function to create the enemies (balls) in the game
 function createEnemies() {
   for (let i = 0; i < enemies; i++) {
     // Create multiple balls with random properties
@@ -74,11 +71,9 @@ function createEnemies() {
   }
 }
 
-// Function to get a random number within a range
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
 // Game loop to update the game state
 function gameLoop() {
   moveBalls();
@@ -114,7 +109,6 @@ function showMessage() {
   }
 }
 
-// Function to remove balls and the player from the game board
 function removeBallsAndPlayer() {
   // Delete all the balls
   for (let i = 0; i < balls.length; i++) {
@@ -140,55 +134,55 @@ function moveBall(ball) {
   let ballHitBox = ballElement.getBoundingClientRect();
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
 
-  const minHeight = 450; // Minimum height
-  const bounceDamping = 1.4; // Bounce damping factor (adjusted to reduce speed)
-  const gravityAcceleration = 0.05; // Adjust the value to reduce gravity acceleration
-  const maxSpeedX = 5; // Maximum speed in the horizontal direction
-  const maxSpeedY = 10; // Maximum speed in the vertical direction
+  const minHeight = 450; // Altura mínima
+  const bounceDamping = 1.4; // Factor de amortiguación del rebote (ajustado para reducir la velocidad)
+  const gravityAcceleration = 0.05; // Ajusta el valor para reducir la aceleración debida a la gravedad
+  const maxSpeedX = 5; // Velocidad máxima en dirección horizontal
+  const maxSpeedY = 10; // Velocidad máxima en dirección vertical
 
   let newTop = ballHitBox.top + ball.speedY;
   let newLeft = ballHitBox.left + ball.speedX;
 
-  // Limit the maximum speed
+  // Limitar la velocidad máxima
   ball.speedX = Math.min(maxSpeedX, Math.max(-maxSpeedX, ball.speedX));
   ball.speedY = Math.min(maxSpeedY, Math.max(-maxSpeedY, ball.speedY));
 
-  // Simulate acceleration due to gravity
+  // Simular la aceleración debida a la gravedad
   ball.speedY += gravityAcceleration;
 
-  // Check upper and lower limits
+  // Comprobar los límites superior e inferior
   if (newTop + ballHitBox.height >= gameBoardSize.bottom) {
-    // Calculate the vertical speed required to reach the minimum height
+    // Calcular la velocidad vertical requerida para alcanzar la altura mínima
     const requiredSpeedY = -Math.sqrt(2 * gravityAcceleration * (minHeight - ballHitBox.height));
-    // Bounce while maintaining the minimum height
+    // Rebotar manteniendo la altura mínima
     ball.speedY = requiredSpeedY * bounceDamping;
 
-    // Make sure the ball does not fall below the new minimum height
+    // Asegurarse de que la bola no caiga por debajo de la nueva altura mínima
     ballElement.style.top = (gameBoardSize.bottom - ballHitBox.height) + "px";
     
   } else if (newTop < gameBoardSize.top) {
-    // Bounce at the top while maintaining the minimum height
+    // Rebotar en la parte superior manteniendo la altura mínima
     ball.speedY = -ball.speedY * bounceDamping;
     ballElement.style.top = gameBoardSize.top + "px";
     
   } else {
-    // Move the ball in the current direction
+    // Mover la bola en la dirección actual
     ballElement.style.top = newTop + "px";
   }
 
-  // Check lateral limits
+  // Comprobar los límites laterales
   if (newLeft + ballHitBox.width >= gameBoardSize.right) {
-    // Bounce on the right edge
+    // Rebotar en el borde derecho
     ball.speedX = -ball.speedX * bounceDamping;
     ballElement.style.left = (gameBoardSize.right - ballHitBox.width) + "px";
     
   } else if (newLeft <= gameBoardSize.left) {
-    // Bounce on the left edge
+    // Rebotar en el borde izquierdo
     ball.speedX = -ball.speedX * bounceDamping;
     ballElement.style.left = gameBoardSize.left + "px";
-  
+   
   } else {
-    // Move the ball in the current direction
+    // Mover la bola en la dirección actual
     ballElement.style.left = newLeft + "px";
   }
 }
@@ -196,12 +190,11 @@ function moveBall(ball) {
 
 // Handle player shooting
 function shoot(event) {
-  // Check if the Space key, ArrowUp key, 'w' key, or 'W' key is pressed
   if (event.code === "Space" || event.key === "ArrowUp" || event.key === "w" || event.key === "W") {
     let currentTime = new Date().getTime();
     player.getElement().style.backgroundImage = 'url("./img/disparo.png")';
-    
-    // Check if the time difference since the last shot is greater than or equal to 1000 milliseconds (1 second)
+     // Cambia el alto y ancho a tus valores deseados
+
     if (currentTime - lastShotTime >= 1000) {
       lastShotTime = currentTime;
       playSound("./audio/shot.mp3");
@@ -210,17 +203,15 @@ function shoot(event) {
       let bulletX = playerHitBox.left + 25;
       let bulletY = player.height;
 
-      // Create a new bullet and add it to the game board
       let newBullet = new Bullet(bulletX, bulletY, 70, 25);
       gameBoardElement.appendChild(newBullet.getElement());
       bullets.push(newBullet);
-    
-      // Set an interval to move the bullet and check for collisions
+     
+
       let bulletMoveInterval = setInterval(() => {
         newBullet.updateBullet();
         checkCollisions(newBullet);
 
-        // Check if the bullet has moved beyond the top of the game board
         if (newBullet.y < 0) {
           gameBoardElement.removeChild(newBullet.getElement());
           clearInterval(bulletMoveInterval);
@@ -232,14 +223,11 @@ function shoot(event) {
   }
 }
 
-// Handle player movement based on key presses
+// Handle player movement
 function movementKey(event) {
-  // Check if the 'a' key, 'A' key, or ArrowLeft key is pressed for left movement
   if (event.key === "a" || event.key === "A" || event.key === "ArrowLeft") {
     movePlayer(-player.playerSpeed);
     player.getElement().style.backgroundImage = `url("./img/izquierda.png")`;
-
-  // Check if the 'd' key, 'D' key, or ArrowRight key is pressed for right movement
   } else if (event.key === "d" || event.key === "D" || event.key === "ArrowRight") {
     movePlayer(player.playerSpeed);
     player.getElement().style.backgroundImage = `url("./img/derecha.png")`;
@@ -252,7 +240,6 @@ function movePlayer(deltaX) {
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
   let newLeft = playerHitBox.left + deltaX;
 
-  // Move the player horizontally within the game board limits
   if (newLeft >= gameBoardSize.left && newLeft + playerHitBox.width <= gameBoardSize.right) {
     player.getElement().style.left = newLeft + "px";
   }
@@ -260,7 +247,6 @@ function movePlayer(deltaX) {
 
 // Move bullets
 function moveBullets() {
-  // Iterate through the bullets and update their positions
   for (let i = 0; i < bullets.length; i++) {
     bullets[i].updateBullet();
   }
@@ -268,12 +254,10 @@ function moveBullets() {
 
 // Check collisions between bullets and balls
 function checkCollisions(bullet) {
-  // Get the hit box for the bullet and game board
   let bulletHitBox = bullet.getElement().getBoundingClientRect();
   let gameBoardHitBox = gameBoardElement.getBoundingClientRect();
   let collidedEnemies = [];
 
-  // Check for collisions between bullets and balls
   balls.forEach(ball => {
     let ballHitBox = ball.getElement().getBoundingClientRect();
 
@@ -283,21 +267,20 @@ function checkCollisions(bullet) {
       bulletHitBox.bottom >= ballHitBox.top &&
       bulletHitBox.top <= ballHitBox.bottom
     ) {
-      // Collision with a ball
+      // Colisión con una bola
       collidedEnemies.push(ball);
     }
   });
 
-  // Check if the bullet has collided with the ceiling
+  // Comprueba si la bala ha colisionado con el techo
   if (bulletHitBox.top <= gameBoardHitBox.top) {
-    // Remove the bullet from the game board
+    // Elimina la bala del tablero
     gameBoardElement.removeChild(bullet.getElement());
     bullets.splice(bullets.indexOf(bullet), 1);
-    return; // Exit the function to avoid further checks
+    return; // Sale de la función para evitar más comprobaciones
   }
 
   for (let enemy of collidedEnemies) {
-    // Remove the enemy from the game board and update game state
     gameBoardElement.removeChild(enemy.getElement());
     enemies--;
     currentScore += SCORE_BALL;
@@ -310,13 +293,12 @@ function checkCollisions(bullet) {
     bullets.splice(bullets.indexOf(bullet), 1);
   }
 
-  // Update the score message with the current score
+  // Update the score
   scoreMsg.innerText = 'Score: ' + currentScore;
 }
 
 // Check collisions between player and balls
 function checkPlayerBallCollisions() {
-  // Get the current time
   let currentTime = new Date().getTime();
   let playerHitBox = player.getElement().getBoundingClientRect();
 
@@ -336,8 +318,8 @@ function checkPlayerBallCollisions() {
         lastCollisionTimes.set(ball, currentTime); // Register the time of the last collision
         playerLifes--;
         playSound("./audio/playerhurt.mp3");
-      
-        // Check if the player still has remaining lives
+       
+
         if (playerLifes >= 0) {
           lifesMsg.innerText = 'Lifes: ' + playerLifes;
           resetPlayerPosition(); // Reset the player's position to the center stuck to the ground
@@ -353,6 +335,7 @@ function resetPlayerPosition() {
 }
 
 function playSound(soundSource) {
+
   gameSound.src = soundSource;
   gameSound.play();
 }
