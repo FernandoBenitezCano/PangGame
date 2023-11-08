@@ -17,9 +17,9 @@ let balls = [];
 let lastShotTime = 0;
 let bullets = [];
 let lastCollisionTimes = new Map();
-let playerLifes = 100;
+let playerLifes = 5;
 let currentScore = 0;
-let enemies = 1;
+let enemies = 10;
 const SCORE_BALL = 1000;
 
 // Event handler for the key press to start the game
