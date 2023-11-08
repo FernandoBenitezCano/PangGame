@@ -62,8 +62,9 @@ body {
 
 .player {
     position: absolute;
-    background-color: blue;
-    top: 86.4%;
+    background-repeat: no-repeat;
+    background-size: 100px 150px;
+    top: 77.1%;
 }
 
 .bullet {

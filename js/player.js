@@ -15,6 +15,7 @@ export class Player extends GameObject {
     this.playerElement.classList.toggle("player");
     this.playerElement.style.width = this.width + "px";
     this.playerElement.style.height = this.height + "px";
+    this.playerElement.style.backgroundImage = `url("./img/derecha.png")`;
   }
 
   getElement() {

@@ -9,15 +9,17 @@ let scoreMsg = document.getElementById("score");
 let lifesMsg = document.getElementById("lifes");
 let manualElement = document.getElementById("manual");
 let restartMsg = document.getElementById("restartMsg");
+let gameSound = document.getElementById("gameSound");
+let backgroundMusic = document.getElementById("backgroundMusic");
 
 let player;
 let balls = [];
 let lastShotTime = 0;
 let bullets = [];
 let lastCollisionTimes = new Map();
-let playerLifes = 3;
+let playerLifes = 100;
 let currentScore = 0;
-let enemies = 9;
+let enemies = 1;
 const SCORE_BALL = 1000;
 
 // Event handler for the key press to start the game
@@ -33,13 +35,12 @@ function keyPressed(event) {
 // Function to start the game
 function startGame() {
   lifesMsg.innerText = 'Lifes: ' + playerLifes;
-  player = new Player(20, 20, 50, 30);
+  player = new Player(20, 20, 150, 200);
   gameBoardElement.appendChild(player.getElement());
   document.addEventListener("keydown", movementKey);
   document.addEventListener("keydown", shoot);
   createEnemies();
-  let backgroundMusic = document.getElementById("backgroundMusic");
-  backgroundMusic.volume = 0.5;
+  backgroundMusic.volume = 0.2;
   backgroundMusic.play();
   gameLoop();
 }
@@ -49,7 +50,9 @@ function createEnemies() {
     // Create multiple balls with random properties
     let randomX = Math.random() * (gameBoardElement.offsetWidth - 50);
     let randomY = Math.random() * (gameBoardElement.offsetHeight - 50);
-    let randomSize = Math.floor(Math.random() * (80 - 50 + 1)) + 50;
+    let minSize=50;
+    let maxSize=100;
+    let randomSize = getRandomNumber(minSize, maxSize);
 
     // Generate a random direction (right or left)
     let randomDirection = Math.random() < 0.5 ? 1 : -1;
@@ -68,6 +71,9 @@ function createEnemies() {
   }
 }
 
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 // Game loop to update the game state
 function gameLoop() {
   moveBalls();
@@ -88,6 +94,8 @@ function showMessage() {
     restartMsg.classList.remove("hide");
     removeBallsAndPlayer();
     document.removeEventListener("keydown", shoot);
+    backgroundMusic.pause();
+    playSound("./audio/victory.mp3");
   }
 
   if (playerLifes <= 0) {
@@ -96,6 +104,8 @@ function showMessage() {
     restartMsg.classList.remove("hide");
     removeBallsAndPlayer();
     document.removeEventListener("keydown", shoot);
+    backgroundMusic.pause();
+    playSound("./audio/defeat.mp3");  
   }
 }
 
@@ -125,7 +135,7 @@ function moveBall(ball) {
   let gameBoardSize = gameBoardElement.getBoundingClientRect();
 
   const minHeight = 450; // Altura mínima
-  const bounceDamping = 1.3; // Factor de amortiguación del rebote (ajustado para reducir la velocidad)
+  const bounceDamping = 1.4; // Factor de amortiguación del rebote (ajustado para reducir la velocidad)
   const gravityAcceleration = 0.05; // Ajusta el valor para reducir la aceleración debida a la gravedad
   const maxSpeedX = 5; // Velocidad máxima en dirección horizontal
   const maxSpeedY = 10; // Velocidad máxima en dirección vertical
@@ -149,10 +159,12 @@ function moveBall(ball) {
 
     // Asegurarse de que la bola no caiga por debajo de la nueva altura mínima
     ballElement.style.top = (gameBoardSize.bottom - ballHitBox.height) + "px";
+    
   } else if (newTop < gameBoardSize.top) {
     // Rebotar en la parte superior manteniendo la altura mínima
     ball.speedY = -ball.speedY * bounceDamping;
     ballElement.style.top = gameBoardSize.top + "px";
+    
   } else {
     // Mover la bola en la dirección actual
     ballElement.style.top = newTop + "px";
@@ -163,10 +175,12 @@ function moveBall(ball) {
     // Rebotar en el borde derecho
     ball.speedX = -ball.speedX * bounceDamping;
     ballElement.style.left = (gameBoardSize.right - ballHitBox.width) + "px";
+    
   } else if (newLeft <= gameBoardSize.left) {
     // Rebotar en el borde izquierdo
     ball.speedX = -ball.speedX * bounceDamping;
     ballElement.style.left = gameBoardSize.left + "px";
+   
   } else {
     // Mover la bola en la dirección actual
     ballElement.style.left = newLeft + "px";
@@ -174,22 +188,25 @@ function moveBall(ball) {
 }
 
 
-
 // Handle player shooting
 function shoot(event) {
   if (event.code === "Space" || event.key === "ArrowUp" || event.key === "w" || event.key === "W") {
     let currentTime = new Date().getTime();
+    player.getElement().style.backgroundImage = 'url("./img/disparo.png")';
+     // Cambia el alto y ancho a tus valores deseados
 
     if (currentTime - lastShotTime >= 1000) {
       lastShotTime = currentTime;
+      playSound("./audio/shot.mp3");
 
       let playerHitBox = player.getElement().getBoundingClientRect();
-      let bulletX = playerHitBox.left + (playerHitBox.width / 2) - (20 / 2);
+      let bulletX = playerHitBox.left + 25;
       let bulletY = player.height;
 
       let newBullet = new Bullet(bulletX, bulletY, 70, 25);
       gameBoardElement.appendChild(newBullet.getElement());
       bullets.push(newBullet);
+     
 
       let bulletMoveInterval = setInterval(() => {
         newBullet.updateBullet();
@@ -200,6 +217,7 @@ function shoot(event) {
           clearInterval(bulletMoveInterval);
           bullets.splice(bullets.indexOf(newBullet), 1);
         }
+        
       }, 50);
     }
   }
@@ -209,8 +227,10 @@ function shoot(event) {
 function movementKey(event) {
   if (event.key === "a" || event.key === "A" || event.key === "ArrowLeft") {
     movePlayer(-player.playerSpeed);
+    player.getElement().style.backgroundImage = `url("./img/izquierda.png")`;
   } else if (event.key === "d" || event.key === "D" || event.key === "ArrowRight") {
     movePlayer(player.playerSpeed);
+    player.getElement().style.backgroundImage = `url("./img/derecha.png")`;
   }
 }
 
@@ -247,14 +267,24 @@ function checkCollisions(bullet) {
       bulletHitBox.bottom >= ballHitBox.top &&
       bulletHitBox.top <= ballHitBox.bottom
     ) {
+      // Colisión con una bola
       collidedEnemies.push(ball);
     }
   });
+
+  // Comprueba si la bala ha colisionado con el techo
+  if (bulletHitBox.top <= gameBoardHitBox.top) {
+    // Elimina la bala del tablero
+    gameBoardElement.removeChild(bullet.getElement());
+    bullets.splice(bullets.indexOf(bullet), 1);
+    return; // Sale de la función para evitar más comprobaciones
+  }
 
   for (let enemy of collidedEnemies) {
     gameBoardElement.removeChild(enemy.getElement());
     enemies--;
     currentScore += SCORE_BALL;
+    playSound("./audio/enemyDown.mp3");
   }
 
   // Remove the bullet after all collisions have been checked
@@ -287,6 +317,8 @@ function checkPlayerBallCollisions() {
       if (!lastCollisionTime || (currentTime - lastCollisionTime >= 1000)) {
         lastCollisionTimes.set(ball, currentTime); // Register the time of the last collision
         playerLifes--;
+        playSound("./audio/playerhurt.mp3");
+       
 
         if (playerLifes >= 0) {
           lifesMsg.innerText = 'Lifes: ' + playerLifes;
@@ -300,4 +332,10 @@ function checkPlayerBallCollisions() {
 function resetPlayerPosition() {
   const newLeft = 50;
   player.getElement().style.left = newLeft + '%';
+}
+
+function playSound(soundSource) {
+
+  gameSound.src = soundSource;
+  gameSound.play();
 }
