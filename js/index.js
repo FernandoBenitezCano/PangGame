@@ -35,7 +35,7 @@ function keyPressed(event) {
 // Function to start the game
 function startGame() {
   lifesMsg.innerText = 'Lifes: ' + playerLifes;
-  player = new Player(20, 20, 150, 200);
+  player = new Player(20, 20, 200, 100);
   gameBoardElement.appendChild(player.getElement());
   document.addEventListener("keydown", movementKey);
   document.addEventListener("keydown", shoot);

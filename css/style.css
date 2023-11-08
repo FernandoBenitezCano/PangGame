@@ -10,12 +10,14 @@ body {
     width: 100vw;
     background-image: url(../img/fondo.png);
     background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     font-family: "Press Start 2P";
+    color:white
 }
 .container {
     width: 80%;
@@ -26,7 +28,7 @@ body {
 
 .gameBoard{
     display: flex;
-    border: 10px solid red;
+    border: 10px solid rgba(188, 138, 114, 1);
     height: 80%;
     width: 80%;
     justify-content: center;
@@ -64,7 +66,7 @@ body {
     position: absolute;
     background-repeat: no-repeat;
     background-size: 100px 150px;
-    top: 77.1%;
+    top: 75.4%;
 }
 
 .bullet {
