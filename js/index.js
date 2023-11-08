@@ -50,7 +50,7 @@ function createEnemies() {
     // Create multiple balls with random properties
     let randomX = Math.random() * (gameBoardElement.offsetWidth - 50);
     let randomY = Math.random() * (gameBoardElement.offsetHeight - 50);
-    let minSize=30;
+    let minSize=70;
     let maxSize=70;
     let randomSize = getRandomNumber(minSize, maxSize);
 
